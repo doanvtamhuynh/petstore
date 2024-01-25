@@ -1,0 +1,106 @@
+﻿@model qlthucung.Models.SanPham
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-lg-12 padding-10">
+    <h1>Edit</h1>
+
+    <h4>SanPham</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit" enctype="multipart/form-data" asp-controller="Admin" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Masp" />
+                <div class="form-group">
+                    <!--<label asp-for="Idthuvien" class="control-label"></label>-->
+                    <input type="hidden" asp-for="Idthuvien" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tensp" class="control-label"></label>
+                    <input asp-for="Tensp" class="form-control" />
+                    <span asp-validation-for="Tensp" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Hinh" class="control-label"></label>
+                    <img width="200" src="@Model.Hinh" id="preImg" />
+                    <input asp-for="Hinh" type="file" id="fileInput" onchange="readURL(this);" class="form-control" multiple />
+
+                    <input type="hidden" name="PathHinh" value="@Model.Hinh" id="PathHinh" />
+                    <span asp-validation-for="Hinh" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Giaban" class="control-label"></label>
+                    <input asp-for="Giaban" class="form-control" />
+                    <span asp-validation-for="Giaban" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Ngaycapnhat" class="control-label"></label>
+                    <input asp-for="Ngaycapnhat" class="form-control" />
+                    <span asp-validation-for="Ngaycapnhat" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdDanhmuc" class="control-label"></label>
+                    <select asp-for="IdDanhmuc" class="form-control" asp-items="@ViewBag.ShowDropList">
+                        <option value="">--Chọn danh mục--</option>
+                    </select>
+                    <span asp-validation-for="IdDanhmuc" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Soluongton" class="control-label"></label>
+                    <input asp-for="Soluongton" class="form-control" />
+                    <span asp-validation-for="Soluongton" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Mota" class="control-label"></label>
+                    <input asp-for="Mota" class="form-control" />
+                    <span asp-validation-for="Mota" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Giamgia" class="control-label"></label>
+                    <input asp-for="Giamgia" class="form-control" />
+                    <span asp-validation-for="Giamgia" class="text-danger"></span>
+                </div>
+                @*<div class="form-group">
+            <label asp-for="Giakhuyenmai" class="control-label"></label>
+            <input asp-for="Giakhuyenmai" class="form-control" />
+            <span asp-validation-for="Giakhuyenmai" class="text-danger"></span>
+        </div>*@
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+
+    $(function () {
+        $('#fileInput').change(function () {
+            var fileName = $(this).val().split('\\').pop();
+            var pathHinh = '/Content/uploads/' + fileName;
+            $('#PathHinh').val(pathHinh);
+        });
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#preImg').attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }   
+</script>

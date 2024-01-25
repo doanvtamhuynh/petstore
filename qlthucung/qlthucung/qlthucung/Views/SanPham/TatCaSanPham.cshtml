@@ -1,0 +1,98 @@
+﻿@model PaginatedList<SanPham>
+
+@{
+    ViewData["Title"] = "TatCaSanPham";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="body" style="margin-top: 50px;">
+
+    <div class="body__mainTitle d-flex justify-content-between align-items-center">
+        <h2>Tất cả sản phẩm</h2>
+    </div>
+
+    <div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-2_5 col-md-4 col-6 post2">
+                    <a asp-controller="SanPham" asp-action="Details" asp-route-id="@item.Masp">
+                        <div class="product">
+                            <div class="product__img">
+                                <img src="@item.Hinh" alt="">
+                            </div>
+                            @if (item.Giamgia == 0 || item.Giamgia == null)
+                            {
+                                <div class="product__sale">
+                                    <h4>Mới</h4>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <div class="product__sale">
+                                    <h4>@item.Giamgia %</h4>
+                                </div>
+                            }
+                            <div class="product__content">
+                                <div class="product__title">
+                                    @item.Tensp
+                                </div>
+
+                                @if (!(item.Giamgia == 0 || item.Giamgia == null))
+                                {
+                                    <div class="product__pride-oldPride">
+                                        <span class="Price">
+                                            <bdi>
+                                                @string.Format("{0:N0}", item.Giaban)
+                                                <span class="currencySymbol">₫</span>
+                                            </bdi>
+                                        </span>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="product__pride-newPride">
+                                <span class="Price">
+                                    <bdi>
+                                        @string.Format("{0:N0}", item.Giakhuyenmai)
+                                        <span class="currencySymbol">₫</span>
+                                    </bdi>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            }
+        </div>
+
+        <!--Pagination-->
+        <ul class="pagination justify-content-center" style="margin: 10px auto;">
+            @if (Model.HasPreviousPage)
+            {
+                <li class="page-item"><a class="page-link" href="@Url.Action("TatCaSanPham", new { pageNumber = Model.PageIndex - 1 })">Previous</a></li>
+            }
+
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                if (i == Model.PageIndex)
+                {
+                    <li class="page-item active"><a href="" class="page-link"> @i</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link" href="@Url.Action("TatCaSanPham", new { pageNumber = i })">@i</a></li>
+                }
+            }
+
+            @if (Model.HasNextPage)
+            {
+                <li class="page-item"><a class="page-link" href="@Url.Action("TatCaSanPham", new { pageNumber = Model.PageIndex + 1 })">Next</a></li>
+            }
+        </ul>
+    </div>
+</div>

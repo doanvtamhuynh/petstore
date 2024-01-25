@@ -1,0 +1,78 @@
+﻿@model qlthucung.Models.SanPham
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-lg-12 padding-8">
+    <h1>Create</h1>
+
+    <h4>SanPham</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create" enctype="multipart/form-data" asp-controller="Admin" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <!--<label asp-for="Idthuvien" class="control-label"></label>-->
+                    <input type="hidden" asp-for="Idthuvien" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tensp" class="control-label"></label>
+                    <input asp-for="Tensp" class="form-control" />
+                    <span asp-validation-for="Tensp" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Hinh" class="control-label"></label>
+                    <input asp-for="Hinh" type="file" class="form-control" id="image" name="files" multiple>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Giaban" class="control-label"></label>
+                    <input asp-for="Giaban" class="form-control" />
+                    <span asp-validation-for="Giaban" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Ngaycapnhat" class="control-label"></label>
+                    <input asp-for="Ngaycapnhat" class="form-control" />
+                    <span asp-validation-for="Ngaycapnhat" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdDanhmuc" class="control-label"></label>
+                    <select asp-for="IdDanhmuc" class="form-control" asp-items="@ViewBag.ShowDropList">
+                        <option value="">--Chọn danh mục--</option>
+                    </select>
+                    <span asp-validation-for="IdDanhmuc" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Soluongton" class="control-label"></label>
+                    <input asp-for="Soluongton" class="form-control" />
+                    <span asp-validation-for="Soluongton" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Mota" class="control-label"></label>
+                    <input asp-for="Mota" class="form-control" />
+                    <span asp-validation-for="Mota" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Giamgia" class="control-label"></label>
+                    <input asp-for="Giamgia" class="form-control" />
+                    <span asp-validation-for="Giamgia" class="text-danger"></span>
+                </div>
+                @*<div class="form-group">
+                    <label asp-for="Giakhuyenmai" class="control-label"></label>
+                    <input asp-for="Giakhuyenmai" class="form-control" />
+                    <span asp-validation-for="Giakhuyenmai" class="text-danger"></span>
+                </div>*@
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>

@@ -1,0 +1,295 @@
+﻿@model IEnumerable<qlthucung.Models.SanPham>
+@{
+    ViewData["Title"] = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@*<div class="body fix-width scroll-inner" style="margin-top: 50px;">
+    <table class="table table-striped">
+
+        @if (ViewBag.cart == null)
+        {
+            <tr>Giỏ hàng trống</tr>
+        }
+        else
+        {
+            <tr>
+                <th>Id</th>
+                <th>Tên sp</th>
+                <th>Hình</th>
+                <th>Giá khuyến mại</th>
+                <th>Số lượng</th>
+                <th>Tổng tiền</th>
+                <th>Option</th>
+            </tr>
+
+            @foreach (var item in ViewBag.cart)
+            {
+                <tr>
+                    <td>@item.Product.Masp</td>
+                    <td>@item.Product.Tensp</td>
+                    <td><img src="@item.Product.Hinh" width="60" /> </td>
+                    <td>@string.Format("{0:N0}", item.Product.Giakhuyenmai)</td>
+                    <td>@item.Quantity</td>
+                    <td>@string.Format("{0:N0}", item.Product.Giakhuyenmai * item.Quantity)</td>
+                    <td><a asp-controller="cart" asp-action="remove" asp-route-id="@item.Product.Masp">Xóa sản phẩm</a></td>
+                </tr>
+            }
+            <tr>
+                <td align="right" colspan="6"><b>Tổng tiền thanh toán</b></td>
+                <td>
+                    <b>
+                        @string.Format("{0:N0}", @ViewBag.total)
+                    </b>
+                </td>
+            </tr>
+        }
+
+    </table>
+    <br>
+    
+</div>*@
+
+<div class="cart__body">
+    
+    <form method="POST" asp-controller="Carrt" asp-action="Index" id="getinfo_form">
+        <div class="row">
+            <div class="col-lg-8 cart__items-box">
+                <a class="btn btn-danger" asp-controller="SanPham" asp-action="index">Tiếp tục mua sắm</a>
+                @if (ViewBag.cart == null)
+                {
+                    <div class="emptyCart">
+                        <img src="~/Content/images/empty_cart.png" alt="">
+                    </div>
+                }
+                else
+                {
+                    <div class="cart__items">
+                        <div class="row">
+                            @foreach (var item in ViewBag.cart)
+                            {
+                                <div class="col-sm-3 col-5 mt-2">
+                                    <img src="@item.Product.Hinh" alt="" class="cart__items-img">
+                                </div>
+                                <div class="col-sm-9 col-7 mt-2">
+                                    <h3>
+                                        @item.Product.Tensp
+                                    </h3>
+
+                                    <br>
+                                    <div class="cart__items-pride">
+                                        <div class="product__pride-newPride">
+                                            <span class="Price">
+                                                <bdi>
+                                                    @string.Format("{0:N0}", item.Product.Giakhuyenmai * item.Quantity)&nbsp;
+                                                    <span class="currencySymbol">₫</span>
+                                                </bdi>
+                                            </span>
+                                        </div>
+
+                                        <div class="cart__items-count">
+                                            Số lượng
+                                            @item.Quantity
+                                        </div>
+
+                                    </div>
+                                    <a class="btn btn-sm btn-danger" asp-controller="cart" asp-action="remove" asp-route-id="@item.Product.Masp">Xóa sản phẩm</a>
+                                </div>
+                            }
+                        </div>
+
+
+                    </div>
+
+                }
+
+            </div>
+
+            <div class="col-lg-4" style="padding-left: 20px; padding-right: 10px;">
+                <div>
+                    <div class="cart__info">
+                        <div class="body__mainTitle">
+                            <h2>ĐỊA CHỈ NHẬN HÀNG</h2>
+                        </div>
+                        <center>
+                            <div class="cart__info-form">
+                                @if (ViewBag.info != null)
+                                {
+                                    @foreach (var item in ViewBag.info)
+                                    {
+                                        <input type="text" placeholder="Họ và tên" name="hoten" value="@item.FullName"><br>
+                                        <input type="email" placeholder="Email" name="email" value="@item.Email">
+                                        <input type="text" placeholder="Số điện thoại" name="sdt" value="@item.PhoneNumber">
+                                        <input type="hidden" name="ngaysinh" value="@item.BirthDate">
+                                    }
+
+                                }
+                                else
+                                {
+                                    <input type="text" placeholder="Họ và tên"><br>
+                                    <input type="email" placeholder="Email">
+                                    <input type="text" placeholder="Số điện thoại">
+                                }
+
+
+                                <div class="address">
+                                    <h6>Tỉnh / Thành Phố</h6>
+                                    <select name="calc_shipping_provinces" required>
+                                        <option value="">Tỉnh/Tp</option>
+                                    </select>
+                                </div>
+
+                                <div class="address">
+                                    <h6>Quận / Huyện</h6>
+                                    <select name="calc_shipping_district" required>
+                                        <option value="">Quận/Huyện</option>
+                                    </select>
+                                </div>
+
+                                <input class="billing_address_1" name="tinh" type="hidden" value="">
+                                <input class="billing_address_2" name="xa" type="hidden" value="">
+
+                                <div class="address">
+                                    <h6>Số nhà: </h6>
+                                    <input type="text" name="sonha" id="">
+                                </div>
+                            </div>
+                        </center>
+
+                        <br>
+                        <br>
+                        <div class="body__mainTitle">
+                            <h2>PHƯƠNG THỨC THANH TOÁN</h2>
+                        </div>
+
+                        <div class="phuongthuctt">
+                            <input type="radio" id="op1" name="op1" required="">
+                            <label for="op1">Chuyển khoản</label>
+
+                            <br>
+
+                            <input type="radio" id="op2" name="op1">
+                            <label for="op2">Trả tiền khi nhận hàng</label>
+                        </div>
+
+                        <div class="total">
+                            <h5>Tổng thanh toán</h5>
+                            <br>
+
+                            <div class="product__pride-newPride" style="font-size: 25px;">
+                                <span class="Price">
+                                    <bdi>
+                                        @if (ViewBag.cart != null)
+                                        {
+                                            @string.Format("{0:N0}", @ViewBag.total)
+                                        }
+                                        &nbsp;
+                                        <span class="currencySymbol">₫</span>
+                                    </bdi>
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <center><button class="buy" name="order" id="order" type="submit">Đặt hàng</button></center>
+
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+    </form>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/vietblogdao/js/districts.min.js"></script>
+<script>
+    //chuyen khoan vnpay
+    $('#op1').click(function () {
+        $('#order').attr('name', 'ordervnpay');
+        $('#getinfo_form').attr('action', '/shopthucung/index.php?page=vnpay_create_payment');
+
+    });
+
+    //cod
+    $('#op2').click(function () {
+        $('#order').attr('name', 'order');
+        $('#getinfo_form').attr('action', '');
+    });
+</script>
+
+<script>
+    //<![CDATA[
+    if (address_2 = localStorage.getItem('address_2_saved')) {
+        $('select[name="calc_shipping_district"] option').each(function () {
+            if ($(this).text() == address_2) {
+                $(this).attr('selected', '')
+            }
+        })
+        $('input.billing_address_2').attr('value', address_2)
+    }
+    if (district = localStorage.getItem('district')) {
+        $('select[name="calc_shipping_district"]').html(district)
+        $('select[name="calc_shipping_district"]').on('change', function () {
+            var target = $(this).children('option:selected')
+            target.attr('selected', '')
+            $('select[name="calc_shipping_district"] option').not(target).removeAttr('selected')
+            address_2 = target.text()
+            $('input.billing_address_2').attr('value', address_2)
+            district = $('select[name="calc_shipping_district"]').html()
+            localStorage.setItem('district', district)
+            localStorage.setItem('address_2_saved', address_2)
+        })
+    }
+    $('select[name="calc_shipping_provinces"]').each(function () {
+        var $this = $(this),
+            stc = ''
+        c.forEach(function (i, e) {
+            e += +1
+            stc += '<option value=' + e + '>' + i + '</option>'
+            $this.html('<option value="">Tỉnh / Thành phố</option>' + stc)
+            if (address_1 = localStorage.getItem('address_1_saved')) {
+                $('select[name="calc_shipping_provinces"] option').each(function () {
+                    if ($(this).text() == address_1) {
+                        $(this).attr('selected', '')
+                    }
+                })
+                $('input.billing_address_1').attr('value', address_1)
+            }
+            $this.on('change', function (i) {
+                i = $this.children('option:selected').index() - 1
+                var str = '',
+                    r = $this.val()
+                if (r != '') {
+                    arr[i].forEach(function (el) {
+                        str += '<option value="' + el + '">' + el + '</option>'
+                        $('select[name="calc_shipping_district"]').html('<option value="">Quận / Huyện</option>' + str)
+                    })
+                    var address_1 = $this.children('option:selected').text()
+                    var district = $('select[name="calc_shipping_district"]').html()
+                    localStorage.setItem('address_1_saved', address_1)
+                    localStorage.setItem('district', district)
+                    $('select[name="calc_shipping_district"]').on('change', function () {
+                        var target = $(this).children('option:selected')
+                        target.attr('selected', '')
+                        $('select[name="calc_shipping_district"] option').not(target).removeAttr('selected')
+                        var address_2 = target.text()
+                        $('input.billing_address_2').attr('value', address_2)
+                        district = $('select[name="calc_shipping_district"]').html()
+                        localStorage.setItem('district', district)
+                        localStorage.setItem('address_2_saved', address_2)
+                    })
+                } else {
+                    $('select[name="calc_shipping_district"]').html('<option value="">Quận / Huyện</option>')
+                    district = $('select[name="calc_shipping_district"]').html()
+                    localStorage.setItem('district', district)
+                    localStorage.removeItem('address_1_saved', address_1)
+                }
+            })
+        })
+    })
+//]]></script>

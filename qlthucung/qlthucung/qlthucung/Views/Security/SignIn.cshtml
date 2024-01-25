@@ -1,0 +1,47 @@
+﻿@model SignIn
+
+@{
+    ViewData["Title"] = "SignIn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<div class="login-form">
+    <div class="height360">
+        <div class="main">
+            <form asp-controller="Security" asp-action="SignIn" method="post" class="form" id="form-2">
+
+                @if (@TempData["LoginErr"] != null)
+                {
+                    <div class="alert alert-danger">@TempData["LoginErr"]</div>
+                }
+
+                <h3 class="heading">Đăng nhập</h3>
+
+                @*<h4 class="text-danger">@ViewBag.msg</h4>
+        <h4 class="text-danger"> @ViewData["blockAccount"]</h4>*@
+
+                <div class="form-group">
+                    <label for="Fullname" class="form-label">Tên tài khoản</label>
+                    <input type="text" asp-for="UserName" class="form-control" />
+                    <span class="form-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Mật khẩu</label>
+                    <input type="password" asp-for="Password" class="form-control" />
+                    <span class="form-message"></span>
+                </div>
+
+                <label asp-for="RememberMe" for="checkbox1" class="remember"><input type="checkbox" asp-for="RememberMe" id="checkbox1" class="checkbox1"> Ghi nhớ mật khẩu</label>
+
+                <button type="submit" class="form-submit" value="Login" name="login_submit">Đăng nhập</button>
+
+                <div class="dont-have-account">
+                    Bạn chưa có tài khoản? <a class="account-register" asp-controller="Security" asp-action="Register">Đăng ký ngay</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

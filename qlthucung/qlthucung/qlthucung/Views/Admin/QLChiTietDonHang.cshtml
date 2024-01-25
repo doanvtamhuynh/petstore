@@ -1,0 +1,66 @@
+﻿@model qlthucung.Models.DonHang
+
+@{
+    ViewData["Title"] = "QLChiTietDonHang";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row" style="margin: 50px 0;">
+    <div class="col-md-4">
+        <form asp-action="QLChiTietDonHang">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Madon" class="control-label"></label>
+                <span> @Model.Madon</span>
+                <input type="hidden" asp-for="Madon" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Makh" class="control-label"></label>
+                <span> @Model.Makh</span>
+                <input type="hidden" asp-for="Makh" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Thanhtoan" class="control-label"></label>
+                <input asp-for="Thanhtoan" class="form-control" disabled />
+                <span asp-validation-for="Thanhtoan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Giaohang" class="control-label"></label>
+                @*<input asp-for="Giaohang" class="form-control" />*@
+
+                <select asp-for="Giaohang" id="cars" class="form-control">
+                    <option checked>@Model.Giaohang</option>
+                    <option value="chờ xử lý">1 - chờ xử lý</option>
+                    <option value="đang xử lý">2 - đang xử lý</option>
+                    <option value="đang giao">3 - đang giao</option>
+                    <option value="giao thành công">4 - giao thành công</option>
+                    <option value="hủy">5 - hủy</option>
+                </select>
+
+                <span asp-validation-for="Giaohang" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ngaydat" class="control-label"></label>
+                <div class="form-control">@Model.Ngaydat</div>
+                <span asp-validation-for="Ngaydat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ngaygiao" class="control-label"></label>
+                <input asp-for="Ngaygiao" class="form-control" />
+                <span asp-validation-for="Ngaygiao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

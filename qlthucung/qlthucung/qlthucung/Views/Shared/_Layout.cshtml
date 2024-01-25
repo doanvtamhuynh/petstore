@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PetStore</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/css/style.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" />
+</head>
+<body>
+    <div class="header">
+
+        <div class="navbar">
+            <div class="navbar__left">
+                <a asp-controller="SanPham" asp-action="Index" class="navbar__logo">
+                    <img src="~/Content/images/logo.jpg" alt="">
+                </a>
+
+                <div class="navbar__menu">
+                    <i id="bars" class="fa fa-bars" aria-hidden="true"></i>
+                    <ul class="navmenu">
+                        <li><a href="/">Trang chủ</a></li>
+
+                        <li><a href="#">Sản phẩm</a></li>
+                        <li><a asp-controller="DichVu" asp-action="Index">Dịch vụ</a></li>
+
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="navbar__center">
+
+                <form method="get" asp-controller="SanPham" asp-action="Search" class="navbar__search" id="formSearch">
+                    <input class="search" id="message" name="search" placeholder="Nhập để tìm kiếm" type="text" value="">                    <!--<i id="btnTalk" class="fa-solid fa-microphone"></i>-->
+                    <i class="fa fa-search" id="searchBtn" type="submit"></i>
+                </form>
+            </div>
+
+            <div class="navbar__right">
+                <div style="display: flex; align-items: center;">
+                    <div class="login" id="loginClick">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <span>
+                                @User.Identity.Name &nbsp;<i class="fa-solid fa-chevron-down"></i>
+
+                        </span>
+
+                        <ul class="login_list">
+                                <li><a href="http://localhost:28241/Shared/profile">Thông tin cá nhân</a></li>
+                            @if (@User.Identity.Name == "Admin")
+                            {
+                                <li><a asp-controller="Admin" asp-action="Index">Dashboard</a></li>
+                            }
+                            <li><a asp-controller="DonHangs" asp-action="Details">Đơn hàng</a></li>
+                            <li>
+                                <form asp-controller="Security" asp-action="SignOut" method="post">
+                                    <button type="submit" style="border: none; outline: none; background: transparent;">
+                                        Đăng xuất &nbsp;<span class="fas fa-sign-out-alt"></span>
+                                    </button>
+                                </form>
+                            </li>
+
+                        </ul>
+                    }
+                    else
+                    {
+                        <div class="login">
+                            <a asp-controller="Security" asp-action="SignIn"><i class="fa fa-user"></i></a>
+                        </div>
+                    }
+                    </div>
+                </div>
+
+                <a class="navbar__shoppingCart getstarted scrollto active" asp-controller="cart" asp-action="Index" style="font-weight:bold; text-decoration:none">
+                    <img src="/Content/images/shopping-cart.svg" style="width: 24px;" alt="">
+                    @using Microsoft.AspNetCore.Http
+
+                    @{
+                        HttpContext httpContext = ViewContext.HttpContext;
+                        string name = httpContext.Session.GetString("countCart");
+                    }
+
+                    @if (String.IsNullOrEmpty(name))
+                    {
+                        <span>0</span>
+                    }
+                    else
+                    {
+                        <span>@name</span>
+                    }
+
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="go-to-top"><i class="fas fa-chevron-up"></i></div>
+
+    @RenderBody()
+
+    <footer>
+        <div class="footer">
+            <div class="footer__title">
+                <span>Liên hệ</span>
+                <div class="footer__social">
+                    @*<a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-google"></i></a>*@
+                </div>
+            </div>
+        </div>
+
+        <div class="footer__info">
+
+            <div class="footer__info-content">
+                <h3>Giới thiệu</h3>
+                <p>Website quản lý, mua bán thú cưng</p>
+            </div>
+
+
+
+            <div class="footer__info-content">
+                <h3>Liên hệ</h3>
+                <p>Địa chỉ: Đà Nẵng</p>
+                <p>Email: </p>
+                <p>Sđt: </p>
+            </div>
+
+            <div class="footer__info-content">
+                <h3>Fanpage</h3>
+                <img width="315" src="~/Content/images/page.PNG" />
+            </div>
+
+        </div>
+
+        <div class="footer__copyright">
+            <center> </center>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/scripts/script.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

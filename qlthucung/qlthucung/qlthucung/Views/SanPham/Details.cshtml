@@ -1,0 +1,225 @@
+﻿@model qlthucung.Models.SanPham
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="~/Content/scripts/zoomsl.min.js"></script>
+
+<script>
+
+    //Zoom image Details product
+    jQuery(document).ready(function ($) {
+
+        $('.small-img img').click(function () {
+            var image = $(this).attr('src');
+            $('.big-img img').attr('src', image);
+        });
+
+        $('#zoom').imagezoomsl({
+            zoomrange: [5, 3]
+        });
+
+    });
+
+</script>
+
+<!-- Hiển thị chi tiết sản phẩm -->
+<div class="body" style="padding-top: 30px; margin-top: 50px;">
+    <a class="buy_continute mt-4" asp-controller="SanPham" asp-action="Index"><i class="fa fa-arrow-circle-left"></i> Trở lại mua hàng</a>
+
+    @if (@TempData["slError"] != null)
+    {
+        <div class="alert alert-danger mt-3" role="alert">
+            @TempData["slError"]
+        </div>
+    }
+
+    @if (@TempData["addSuccess"] != null)
+    {
+        <div class="alert alert-success mt-3" role="alert">
+            @TempData["addSuccess"]
+        </div>
+    }
+
+    <div class="product__details row">
+        <div class="product__details-img col-lg-4 col-md-4">
+            <div class="big-img">
+                <img src="@Html.DisplayFor(model => model.Hinh)" alt="" id="zoom" style="visibility: visible;">
+            </div>
+            <div class="small-img d-flex mt-5">
+                @foreach (var item in ViewBag.getthuvienanh)
+                {
+                    <img src="@Model.Hinh" onerror="this.onerror=null; this.src='https://i.pinimg.com/originals/ae/4c/9e/ae4c9ea2edf887f6ad1e4e63cfae05b0.jpg'" class="small-imgg" alt="">
+                    <img src="@item.thuvienanh.Img1" onerror="this.onerror=null; this.src='https://i.pinimg.com/originals/ae/4c/9e/ae4c9ea2edf887f6ad1e4e63cfae05b0.jpg'" class="small-imgg" alt="">
+                    <img src="@item.thuvienanh.Img2" onerror="this.onerror=null; this.src='https://i.pinimg.com/originals/ae/4c/9e/ae4c9ea2edf887f6ad1e4e63cfae05b0.jpg'" class="small-imgg" alt="">
+                    <img src="@item.thuvienanh.Img3" onerror="this.onerror=null; this.src='https://i.pinimg.com/originals/ae/4c/9e/ae4c9ea2edf887f6ad1e4e63cfae05b0.jpg'" class="small-imgg" alt="">
+                }
+            </div>
+        </div>
+
+        <div class="product__details-info col-lg-8 col-md-8">
+            <h3 style="margin-top: unset; line-height: unset;">@Html.DisplayFor(model => model.Tensp)</h3>
+            <div class="short-des">
+                Mo ta ngắn
+
+            </div><hr />
+
+            <div class="product__pride">
+                @if (Model.Giamgia == 0 || Model.Giamgia == null)
+                {
+                    <div class="product__pride-newPride" style="font-size: 40px; text-align: start;">
+                        <span class="Price">
+                            <bdi>
+                                @string.Format("{0:N0}", Model.Giakhuyenmai)
+                                <span class="currencySymbol">₫</span>
+                            </bdi>
+                        </span>
+                    </div>
+                }
+                else
+                {
+                    <div class="product__pride-oldPride" style="font-size: 20px; text-align: start;">
+                        <span class="Price">
+                            <bdi>
+                                @string.Format("{0:N0}", Model.Giaban)
+                                <span class="currencySymbol">₫</span>
+                            </bdi>
+                        </span>
+                    </div>
+                    <div class="product__pride-newPride" style="font-size: 40px; text-align: start;">
+                        <span class="Price">
+                            <bdi>
+                                @string.Format("{0:N0}", Model.Giakhuyenmai)
+                                <span class="currencySymbol">₫</span>
+                            </bdi>
+                        </span>
+                    </div>
+                }
+
+            </div>
+
+            <form action="" method="POST">
+
+                <div class="number">
+                    <span>
+                        Số lượng tồn
+                        <span class="number__count">
+                            @Html.DisplayFor(model => model.Soluongton)
+                        </span>
+                    </span>
+
+                </div>
+
+
+                @if (Model.Soluongton == 0)
+                {
+                    <div class="product__cart">
+                        <div class="product__cart-add" style="background: unset;">Tạm hết hàng</div>
+                    </div>
+                }
+                else
+                {
+                    @*<div class="product__cart">
+                            <a asp-controller="cart" asp-action="addtocart" asp-route-id="@Model.Masp" class="product__cart-add" name="add-to-cart" onclick="alert('Thêm vào giỏ hàng thành công!')">
+                                Thêm vào giỏ hàng
+                            </a>
+                            <a asp-controller="cart" asp-action="buy" asp-route-id="@Model.Masp" class="product__cart-buy" name="buy-now">Mua ngay</a>
+                        </div>*@
+
+                    <div class="number">
+                        <span>Số lượng</span>
+                        <div class="number__count">
+                            <input type="number" value="1" name="soluong">
+                        </div>
+                    </div>
+
+                    <div class="product__cart">
+                        <button type="submit" class="product__cart-add" asp-controller="cart" asp-action="addtocart" asp-route-id="@Model.Masp">Thêm vào giỏ hàng</button>
+                    </div>
+                }
+
+            </form>
+        </div>
+    </div>
+
+
+
+
+    <!--Mô tả sản phẩm-->
+
+    <div class="body__mainTitle d-flex justify-content-between">
+        <h2>MÔ TẢ SẢN PHẨM </h2>
+
+    </div>
+    <article>
+        @Html.DisplayFor(model => model.Mota)
+    </article>
+
+    <hr />
+
+    <!-- Sản phẩm ngẫu nhiên -->
+    <div class="body__mainTitle">
+        <h2>SẢN PHẨM NGẪU NHIÊN</h2>
+    </div>
+    <div class="row">
+        @foreach (var item in ViewBag.getSPRanDom)
+        {
+            <div class="col-lg-2_5 col-md-4 col-6 post2">
+                <a asp-controller="SanPham" asp-action="Details" asp-route-id="@item.Masp">
+                    <div class="product">
+                        <div class="product__img">
+                            <img src="@item.Hinh" alt="">
+                        </div>
+                        @if (item.Giamgia == 0 || item.Giamgia == null)
+                        {
+                            <div class="product__sale">
+                                <h4>Mới</h4>
+                            </div>
+
+                        }
+                        else
+                        {
+                            <div class="product__sale">
+                                <h4>@item.Giamgia %</h4>
+                            </div>
+                        }
+                        <div class="product__content">
+                            <div class="product__title">
+                                @item.Tensp
+                            </div>
+
+                            @if (!(item.Giamgia == 0 || item.Giamgia == null))
+                            {
+                                <div class="product__pride-oldPride">
+                                    <span class="Price">
+                                        <bdi>
+                                            @string.Format("{0:N0}", item.Giaban)
+                                            <span class="currencySymbol">₫</span>
+                                        </bdi>
+                                    </span>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="product__pride-newPride">
+                            <span class="Price">
+                                <bdi>
+                                    @string.Format("{0:N0}", item.Giakhuyenmai)
+                                    <span class="currencySymbol">₫</span>
+                                </bdi>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+
+    </div>
+
+
+</div>
+<!-- End Hiển thị chi tiết sản phẩm -->
