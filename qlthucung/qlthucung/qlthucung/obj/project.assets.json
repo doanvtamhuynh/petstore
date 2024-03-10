@@ -7643,11 +7643,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\do an kiem thu phan mem\\asp.net\\asp.net\\qlthucung\\qlthucung\\qlthucung\\qlthucung.csproj",
+      "projectUniqueName": "D:\\MyProject\\BE\\petstore\\qlthucung\\qlthucung\\qlthucung\\qlthucung.csproj",
       "projectName": "qlthucung",
-      "projectPath": "D:\\do an kiem thu phan mem\\asp.net\\asp.net\\qlthucung\\qlthucung\\qlthucung\\qlthucung.csproj",
+      "projectPath": "D:\\MyProject\\BE\\petstore\\qlthucung\\qlthucung\\qlthucung\\qlthucung.csproj",
       "packagesPath": "C:\\Users\\84862\\.nuget\\packages\\",
-      "outputPath": "D:\\do an kiem thu phan mem\\asp.net\\asp.net\\qlthucung\\qlthucung\\qlthucung\\obj\\",
+      "outputPath": "D:\\MyProject\\BE\\petstore\\qlthucung\\qlthucung\\qlthucung\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "F:\\DevExpress\\Components\\Offline Packages",
@@ -7664,7 +7664,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\sdk\\7.0.302\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
         "F:\\DevExpress\\Components\\System\\Components\\Packages": {},
         "https://api.nuget.org/v3/index.json": {}
       },
@@ -7678,6 +7677,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -7732,7 +7736,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

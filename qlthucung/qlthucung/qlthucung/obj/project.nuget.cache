@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "JmBYV6BvGKsGcOL5lC6L1pFvTu5JbFezH/h7T/U7scBkxj4LWowIdorFQ/+WqZ5fHJzt7xp9zwkghjNnqGHSoQ==",
+  "dgSpecHash": "C1xQF0msDOjtfaRLwig49rMdD4Rpsz/aP9eI4Q1OpX4Si+tMbDT8LVL3/PZYxp2q5HG2Oe/UcThPa3OCt3hTeQ==",
   "success": true,
-  "projectFilePath": "D:\\do an kiem thu phan mem\\asp.net\\asp.net\\qlthucung\\qlthucung\\qlthucung\\qlthucung.csproj",
+  "projectFilePath": "D:\\MyProject\\BE\\petstore\\qlthucung\\qlthucung\\qlthucung\\qlthucung.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\84862\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\84862\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.17\\microsoft.aspnetcore.cryptography.internal.5.0.17.nupkg.sha512",

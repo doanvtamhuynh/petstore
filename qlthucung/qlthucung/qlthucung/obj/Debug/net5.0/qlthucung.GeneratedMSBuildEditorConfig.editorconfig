@@ -8,4 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = qlthucung
-build_property.ProjectDir = D:\do an kiem thu phan mem\asp.net\asp.net\qlthucung\qlthucung\qlthucung\
+build_property.ProjectDir = D:\MyProject\BE\petstore\qlthucung\qlthucung\qlthucung\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
